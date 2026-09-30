@@ -1,0 +1,316 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+body {
+  background-color: #dce7f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.login-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.login-card {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  display: flex;
+  width: 900px;
+  max-width: 100%;
+  min-height: 580px;
+  overflow: hidden;
+}
+
+/* Left Section */
+.login-form-section {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo-icon {
+  background-color: #3b82f6;
+  color: white;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.logo-text {
+  font-size: 20px;
+  font-weight: 700;
+  color: #3b82f6;
+}
+
+.header-text {
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 25px;
+}
+
+.header-text h2 {
+  font-size: 22px;
+  color: #1e293b;
+  margin-bottom: 6px;
+}
+
+.header-text p {
+  font-size: 13px;
+  color: #64748b;
+}
+
+.login-form {
+  width: 100%;
+  max-width: 320px;
+}
+
+.input-group {
+  margin-bottom: 16px;
+}
+
+.input-group label {
+  display: block;
+  font-size: 11px;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input-group input:focus {
+  border-color: #3b82f6;
+}
+
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  margin-bottom: 20px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #64748b;
+  cursor: pointer;
+}
+
+.forgot-link {
+  color: #64748b;
+  text-decoration: none;
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.submit-btn:hover {
+  background-color: #2563eb;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 18px 0;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.divider span {
+  padding: 0 10px;
+  color: #94a3b8;
+  font-size: 11px;
+}
+
+.social-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.social-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.fb-icon {
+  color: #1877f2;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.g-icon {
+  color: #ea4335;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.signup-text {
+  text-align: center;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.signup-text a {
+  color: #3b82f6;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.footer-copyright {
+  font-size: 11px;
+  color: #94a3b8;
+  margin-top: 20px;
+}
+
+/* Right Graphic Section */
+.login-graphic-section {
+  flex: 1.1;
+  background: linear-gradient(135deg, #7193d9 0%, #8ca9e8 100%);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+}
+
+.top-right-header {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  text-align: right;
+  color: white;
+}
+
+.top-right-header span {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.top-right-header small {
+  font-size: 11px;
+  opacity: 0.8;
+}
+
+.illustration-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.blob-background {
+  position: absolute;
+  width: 320px;
+  height: 300px;
+  background: #ffffff;
+  border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+  opacity: 0.95;
+}
+
+.graphic-svg {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  z-index: 2;
+}
+
+/* Decorative Pattern Dots */
+.dots-grid {
+  position: absolute;
+  width: 60px;
+  height: 40px;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.6) 2px, transparent 2px);
+  background-size: 10px 10px;
+}
+
+.dots-top-left {
+  top: 30px;
+  left: 30px;
+}
+
+.dots-bottom-right {
+  bottom: 30px;
+  right: 30px;
+}

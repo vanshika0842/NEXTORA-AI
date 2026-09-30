@@ -1,0 +1,126 @@
+.opportunity-card {
+  background: white;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.org-info {
+  display: flex;
+  gap: 12px;
+}
+
+.org-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: #f1f5f9;
+  display: grid;
+  place-items: center;
+  color: var(--text-secondary);
+}
+
+.category-pill {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.opportunity-title {
+  margin: 4px 0 2px 0;
+  font-size: 1.1rem;
+}
+
+.org-name {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-bookmark {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+}
+
+.opportunity-description {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Meta Data */
+.card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.meta-row { display: flex; gap: 16px; flex-wrap: wrap; }
+.meta-item { display: flex; align-items: center; gap: 6px; }
+
+.verified-source {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: #166534;
+  background: #f0fdf4;
+  padding: 4px 8px;
+  border-radius: 4px;
+  width: fit-content;
+}
+
+/* Footer & Badges */
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border-color);
+  padding-top: 12px;
+}
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.badge-open { background: #dcfce7; color: #15803d; }
+.badge-closing-soon { background: #fef3c7; color: #b45309; }
+.badge-closed { background: #fee2e2; color: #b91c1c; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+}
+.btn-primary { background: var(--primary); color: white; }
+.btn-secondary { border-color: var(--border-color); background: white; color: var(--text-primary); }

@@ -1,0 +1,31 @@
+-- CreateTable
+CREATE TABLE "Opportunity" (
+    "id" SERIAL NOT NULL,
+    "title" TEXT NOT NULL,
+    "organization" TEXT,
+    "description" TEXT,
+    "category" TEXT NOT NULL,
+    "opportunityType" TEXT,
+    "educationLevels" JSONB,
+    "degrees" JSONB,
+    "branches" JSONB,
+    "states" JSONB,
+    "eligibility" JSONB,
+    "location" TEXT,
+    "applicationStart" TIMESTAMP(3),
+    "applicationDeadline" TIMESTAMP(3),
+    "examDate" TIMESTAMP(3),
+    "resultDate" TIMESTAMP(3),
+    "officialUrl" TEXT,
+    "applicationUrl" TEXT,
+    "fees" JSONB,
+    "requiredDocuments" JSONB,
+    "sourceName" TEXT,
+    "sourceUrl" TEXT,
+    "lastVerified" TIMESTAMP(3),
+    "isActive" BOOLEAN NOT NULL DEFAULT true,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Opportunity_pkey" PRIMARY KEY ("id")
+);

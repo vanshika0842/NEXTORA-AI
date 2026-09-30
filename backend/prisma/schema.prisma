@@ -1,0 +1,392 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  profile StudentProfile?
+}
+
+model StudentProfile {
+  id     Int  @id @default(autoincrement())
+  userId Int  @unique
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // =====================================================
+  // EDUCATION STAGE
+  // =====================================================
+
+  // school | college | graduate
+  educationLevel String?
+
+  // =====================================================
+  // INSTITUTION INFORMATION
+  // =====================================================
+
+  institutionName String?
+  institutionType String?
+
+  // Previous "college" field will eventually be removed.
+  // Keep it temporarily if your current service still uses it.
+  college String?
+
+  state String?
+  city  String?
+
+  // =====================================================
+  // SCHOOL INFORMATION
+  // =====================================================
+
+  schoolClass            String?
+  schoolBoard            String?
+  schoolStream           String?
+  schoolSubjects         Json?
+  expectedCompletionYear Int?
+
+  // =====================================================
+  // COLLEGE INFORMATION
+  // =====================================================
+
+  degreeLevel String?
+  degree      String?
+  branch      String?
+
+  currentYear            Int?
+  currentSemester        Int?
+  expectedGraduationYear Int?
+
+  // =====================================================
+  // ACADEMIC PERFORMANCE
+  // =====================================================
+
+  academicScore     String?
+  academicScoreType String?
+  gpa               String?
+
+  backlogs Int?
+
+  // =====================================================
+  // STUDENT IDENTIFICATION
+  // =====================================================
+
+  studentId String?
+
+  // =====================================================
+  // GRADUATE INFORMATION
+  // =====================================================
+
+  highestQualification String?
+  graduationYear       Int?
+
+  employmentStatus String?
+  workExperience   String?
+
+  // =====================================================
+  // INTERESTS & CAREER
+  // =====================================================
+
+  academicInterests String?
+  careerGoals       String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum OpportunityType {
+  EXAM
+  SCHOLARSHIP
+  COURSE
+  INTERNSHIP
+  CERTIFICATION
+  COMPETITION
+  RESEARCH
+  FELLOWSHIP
+  CAREER_PROGRAM
+  INTERNATIONAL
+}
+
+enum OpportunityStatus {
+  UPCOMING
+  OPEN
+  CLOSING_SOON
+  CLOSED
+  ARCHIVED
+}
+
+model Opportunity {
+  id Int @id @default(autoincrement())
+
+  title        String
+  organization String
+  type         OpportunityType
+
+  description String? @db.Text
+
+  officialUrl    String?
+  applicationUrl String?
+
+  location String?
+  isRemote Boolean @default(false)
+
+  applicationStartDate DateTime?
+  applicationDeadline  DateTime?
+
+  status OpportunityStatus @default(UPCOMING)
+
+  sourceName     String?
+  sourceUrl      String?
+  lastVerifiedAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  examDetails          ExamDetails?
+  scholarshipDetails   ScholarshipDetails?
+  courseDetails        CourseDetails?
+  internshipDetails    InternshipDetails?
+  certificationDetails CertificationDetails?
+  competitionDetails   CompetitionDetails?
+  researchDetails      ResearchDetails?
+  fellowshipDetails    FellowshipDetails?
+
+  @@index([type])
+  @@index([status])
+  @@index([applicationDeadline])
+  @@index([organization])
+}
+
+model ExamDetails {
+  id Int @id @default(autoincrement())
+
+  opportunityId Int         @unique
+  opportunity   Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+
+  examDate DateTime?
+
+  examMode String?
+
+  conductingBody String?
+
+  applicationFee String?
+
+  ageLimit String?
+
+  numberOfAttempts String?
+
+  eligibilityText String? @db.Text
+
+  syllabusUrl     String?
+  notificationUrl String?
+}
+
+model ScholarshipDetails {
+  id Int @id @default(autoincrement())
+
+  opportunityId Int         @unique
+  opportunity   Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+
+  awardAmount String?
+  awardType   String?
+
+  incomeLimit String?
+
+  academicRequirement String?
+
+  categoryRequirement String?
+
+  benefits String? @db.Text
+
+  requiredDocuments String? @db.Text
+}
+
+model CourseDetails {
+  id Int @id @default(autoincrement())
+
+  opportunityId Int         @unique
+  opportunity   Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+
+  duration String?
+
+  level String?
+
+  mode String?
+
+  price String?
+
+  rating Float?
+
+  certificate Boolean @default(false)
+
+  skills String[] @default([])
+
+  startDate DateTime?
+}
+
+model CompetitionDetails {
+  id Int @id @default(autoincrement())
+
+  opportunityId Int         @unique
+  opportunity   Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+
+  competitionDate DateTime?
+
+  registrationDeadline DateTime?
+
+  teamBased Boolean @default(false)
+
+  teamSize String?
+
+  prizeDetails String? @db.Text
+
+  participationMode String?
+
+  themes String[] @default([])
+}
+
+model ResearchDetails {
+  id Int @id @default(autoincrement())
+
+  opportunityId Int         @unique
+  opportunity   Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+
+  researchArea String?
+
+  duration String?
+
+  stipend String?
+
+  facultyRequired Boolean @default(false)
+
+  skills String[] @default([])
+
+  eligibilityText String? @db.Text
+}
+
+model FellowshipDetails {
+  id Int @id @default(autoincrement())
+
+  opportunityId Int         @unique
+  opportunity   Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+
+  duration String?
+
+  stipend String?
+
+  fellowshipAmount String?
+
+  eligibilityText String? @db.Text
+
+  benefits String? @db.Text
+}
+
+model InternshipDetails {
+  id Int @id @default(autoincrement())
+
+  opportunityId Int         @unique
+  opportunity   Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+
+  role String?
+
+  duration String?
+
+  stipend String?
+
+  workMode String?
+
+  experienceLevel String?
+
+  skills String[] @default([])
+
+  startDate DateTime?
+}
+
+model CertificationDetails {
+  id Int @id @default(autoincrement())
+
+  opportunityId Int         @unique
+  opportunity   Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+
+  provider String?
+
+  level String?
+
+  duration String?
+
+  price String?
+
+  certificateType String?
+
+  skills String[] @default([])
+}
+
+model Source {
+  id Int @id @default(autoincrement())
+
+  name      String
+  website   String
+  sourceUrl String
+
+  category         String?
+  collectionMethod String
+
+  active Boolean @default(true)
+
+  lastCheckedAt       DateTime?
+  lastSuccessfulRunAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  configuration SourceConfiguration?
+  rawData       RawData[]
+}
+
+model SourceConfiguration {
+  id Int @id @default(autoincrement())
+
+  sourceId Int    @unique
+  source   Source @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+
+  requestConfig    Json?
+  parsingConfig    Json?
+  monitoringConfig Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model RawData {
+  id Int @id @default(autoincrement())
+
+  sourceId Int
+  source   Source @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+
+  content String @db.Text
+
+  contentType String?
+
+  statusCode Int?
+
+  collectedAt DateTime @default(now())
+
+  createdAt DateTime @default(now())
+
+  @@index([sourceId])
+  @@index([collectedAt])
+}
