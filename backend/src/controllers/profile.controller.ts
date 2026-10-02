@@ -173,8 +173,9 @@ if (invalidNumber) {
     // =====================================================
 
     if (
+      backlogs !== undefined &&
       backlogs !== null &&
-      (!Number.isInteger(backlogs) || backlogs < 0)
+     (!Number.isInteger(backlogs) || backlogs < 0)
     ) {
       return res.status(400).json({
         message:
@@ -186,12 +187,11 @@ if (invalidNumber) {
     // VALIDATE COLLEGE YEAR
     // =====================================================
 
-    if (
-      currentYear !== null &&
-      (!Number.isInteger(currentYear) ||
-        currentYear < 1 ||
-        currentYear > 10)
-    ) {
+      if (
+    currentYear !== undefined &&
+    currentYear !== null &&
+    (currentYear < 1 || currentYear   > 10)
+  ) {
       return res.status(400).json({
         message:
           "Current year must be a valid whole number",
@@ -203,10 +203,9 @@ if (invalidNumber) {
     // =====================================================
 
     if (
+      currentSemester !== undefined &&
       currentSemester !== null &&
-      (!Number.isInteger(currentSemester) ||
-        currentSemester < 1 ||
-        currentSemester > 20)
+      (currentSemester < 1 ||     currentSemester > 20)
     ) {
       return res.status(400).json({
         message:
@@ -237,7 +236,7 @@ if (invalidNumber) {
           (subject: string) => subject.length > 0
         );
 
-      if (schoolSubjects.length === 0) {
+      if (schoolSubjects && schoolSubjects.length === 0) {
         schoolSubjects = null;
       }
     }

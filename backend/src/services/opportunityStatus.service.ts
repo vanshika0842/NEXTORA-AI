@@ -1,3 +1,4 @@
+
 import {
   OpportunityStatus,
 } from "../generated/prisma/enums";
@@ -43,14 +44,20 @@ export function getEffectiveOpportunityStatus(input: {
     return status;
   }
 
-  if (applicationDeadline.getTime() < now.getTime()) {
+  const today = new Date(now);
+  today.setHours(0, 0, 0, 0);
+
+  const deadlineDay = new Date(applicationDeadline);
+  deadlineDay.setHours(0, 0, 0, 0);
+
+  if (deadlineDay.getTime() < today.getTime()) {
     return OpportunityStatus.CLOSED;
   }
 
   const closingSoonEnd =
-    now.getTime() + CLOSING_SOON_THRESHOLD_DAYS * MS_PER_DAY;
+    today.getTime() + (CLOSING_SOON_THRESHOLD_DAYS + 1) * MS_PER_DAY;
 
-  if (applicationDeadline.getTime() <= closingSoonEnd) {
+  if (deadlineDay.getTime() < closingSoonEnd) {
     return OpportunityStatus.CLOSING_SOON;
   }
 

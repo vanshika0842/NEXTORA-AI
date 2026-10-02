@@ -1,7 +1,5 @@
 import prisma from "../lib/prisma";
 
-import { saveRawData } from "./rawData.service";
-
 import type {
   CollectionResult,
 } from "../collectors/collector.types";
@@ -76,17 +74,15 @@ export const collectFromSource = async (
   }
 
   if (result.success) {
-  await prisma.source.update({
-    where: {
-      id: source.id,
-    },
-    data: {
-      lastSuccessfulRunAt: new Date(),
-    },
-  });
-  await saveRawData(result);
+    await prisma.source.update({
+      where: {
+        id: source.id,
+      },
+      data: {
+        lastSuccessfulRunAt: new Date(),
+      },
+    });
+  }
 
-}
-
-return result;
+  return result;
 }

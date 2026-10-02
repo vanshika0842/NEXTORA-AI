@@ -1,5 +1,5 @@
 import prisma from "../lib/prisma";
-
+import { Prisma } from "../generated/prisma/client";
 export interface StudentProfileInput {
   // EDUCATION STAGE
   educationLevel?: string | null;
@@ -157,10 +157,14 @@ export const upsertStudentProfile = async (
   });
 
   if (!user) {
-    throw new Error("User not found");
-  }
+  throw new Error("User notfound");
+}
 
-  const profile = await prisma.studentProfile.upsert({
+const normalizedSchoolSubjects = normalizeSubjects(
+  data.schoolSubjects
+);
+
+const profile = await prisma.studentProfile.upsert({
     where: {
       userId,
     },
@@ -191,8 +195,19 @@ export const upsertStudentProfile = async (
       schoolBoard: normalizeString(data.schoolBoard),
       schoolStream: normalizeString(data.schoolStream),
 
-      schoolSubjects:
-          normalizeSubjects(data.schoolSubjects),
+      schoolSubjects: (() => {
+      const subjects =       normalizeSubjects(data.    schoolSubjects);
+
+      if (subjects === undefined) {
+        return undefined;
+      }
+
+      if (subjects === null) {
+      return Prisma.JsonNull;
+      }
+
+    return subjects;
+     })(),
 
       expectedCompletionYear: normalizeNumber(
         data.expectedCompletionYear
@@ -268,8 +283,19 @@ export const upsertStudentProfile = async (
       schoolBoard: normalizeString(data.schoolBoard),
       schoolStream: normalizeString(data.schoolStream),
 
-      schoolSubjects:
-        normalizeSubjects(data.schoolSubjects),
+      schoolSubjects: (() => {
+      const subjects =     normalizeSubjects(data.    schoolSubjects);
+
+      if (subjects === undefined) {
+        return undefined;
+      }
+
+      if (subjects === null) {
+        return Prisma.JsonNull;
+      }
+
+     return subjects;
+    })(),
 
       expectedCompletionYear: normalizeNumber(
         data.expectedCompletionYear

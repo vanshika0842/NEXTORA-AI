@@ -136,6 +136,8 @@ model Opportunity {
   organization String
   type         OpportunityType
 
+  fingerprint String? @unique
+
   description String? @db.Text
 
   officialUrl    String?

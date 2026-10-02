@@ -6,7 +6,11 @@
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "build": "tsc",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js",
+    "test:validator": "ts-node src/test-validator.ts",
+    "test:fingerprint": "ts-node src/test-fingerprint.ts",
+    "test:persistence": "ts-node src/test-persistence.ts",
+    "test:ingestion": "ts-node src/test-ingestion.ts"
   },
   "keywords": [],
   "author": "",
@@ -16,9 +20,11 @@
     "@prisma/adapter-pg": "^7.10.0",
     "@prisma/client": "^7.9.1",
     "bcryptjs": "^3.0.3",
+    "cheerio": "^1.2.0",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "framer-motion": "^13.4.6",
     "jsonwebtoken": "^9.0.3",
     "pg": "^8.23.0",
     "prisma": "^7.9.1"
