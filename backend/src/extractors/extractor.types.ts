@@ -27,4 +27,5 @@ export interface OpportunityExtractorInput {
   html: string;
   sourceUrl: string;
   sourceName?: string | null;
+  officialUrl?: string | null;
 }

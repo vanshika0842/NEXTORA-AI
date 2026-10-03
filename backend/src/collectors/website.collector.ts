@@ -11,7 +11,15 @@ export class WebsiteCollector implements Collector {
     const collectedAt = new Date();
 
     try {
-      const response = await fetch(sourceUrl);
+      const url = new URL(sourceUrl);
+
+      if (url.protocol !== "http:" && url.protocol !== "https:") {
+        throw new Error("Only HTTP and HTTPS URLs can be collected");
+      }
+
+      const response = await fetch(url, {
+        signal: AbortSignal.timeout(15_000),
+      });
 
       const content = await response.text();
 

@@ -10,7 +10,11 @@
     "test:validator": "ts-node src/test-validator.ts",
     "test:fingerprint": "ts-node src/test-fingerprint.ts",
     "test:persistence": "ts-node src/test-persistence.ts",
-    "test:ingestion": "ts-node src/test-ingestion.ts"
+    "test:ingestion": "ts-node src/test-ingestion.ts",
+    "test:discovery": "ts-node src/test-source-discovery.ts",
+    "test:detail-extraction": "ts-node src/test-detail-extraction.ts",
+    "test:nsp-discovery": "ts-node src/test-nsp-discovery.ts",
+    "test:crawler": "ts-node src/test-source-crawler.ts"
   },
   "keywords": [],
   "author": "",

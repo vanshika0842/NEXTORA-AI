@@ -5,7 +5,8 @@ import type { ExtractedOpportunity } from "../extractors/extractor.types";
 export const extractOpportunityFromCollection = (
   result: CollectionResult,
   sourceUrl: string,
-  sourceName?: string | null
+  sourceName?: string | null,
+  officialUrl?: string | null
 ): ExtractedOpportunity => {
   if (!result.success) {
     throw new Error(
@@ -23,5 +24,6 @@ export const extractOpportunityFromCollection = (
     html: result.content,
     sourceUrl,
     sourceName,
+    officialUrl,
   });
 };

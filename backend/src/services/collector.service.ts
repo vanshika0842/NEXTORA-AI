@@ -1,23 +1,22 @@
 import prisma from "../lib/prisma";
 
-import type {
-  CollectionResult,
-} from "../collectors/collector.types";
+import type { CollectionResult } from "../collectors/collector.types";
 
 import { WebsiteCollector } from "../collectors/website.collector";
 
 const websiteCollector = new WebsiteCollector();
 
-export const collectFromSource = async (
-  sourceId: number
+/**
+ * Collect a permitted URL for an existing source. The source check remains
+ * centralized here so listing and detail collection follow the same rules.
+ */
+export const collectUrlFromSource = async (
+  sourceId: number,
+  url: string
 ): Promise<CollectionResult> => {
   const source = await prisma.source.findUnique({
-    where: {
-      id: sourceId,
-    },
-    include: {
-      configuration: true,
-    },
+    where: { id: sourceId },
+    include: { configuration: true },
   });
 
   if (!source) {
@@ -34,55 +33,40 @@ export const collectFromSource = async (
     );
   }
 
+  if (source.collectionMethod !== "WEBSITE") {
+    throw new Error(
+      `Unsupported collection method: ${source.collectionMethod}`
+    );
+  }
+
   await prisma.source.update({
-    where: {
-      id: source.id,
-    },
-    data: {
-      lastCheckedAt: new Date(),
-    },
+    where: { id: source.id },
+    data: { lastCheckedAt: new Date() },
   });
 
-  let result: CollectionResult;
-
-  switch (source.collectionMethod) {
-    case "WEBSITE":
-      result = await websiteCollector.collect(
-        source.id,
-        source.sourceUrl
-      );
-      break;
-
-    case "API":
-      throw new Error("API collector is not implemented yet");
-
-    case "RSS":
-      throw new Error("RSS collector is not implemented yet");
-
-    case "SITEMAP":
-      throw new Error("Sitemap collector is not implemented yet");
-
-    case "MANUAL":
-      throw new Error(
-        "Manual collector does not support automatic collection"
-      );
-
-    default:
-      throw new Error(
-        `Unsupported collection method: ${source.collectionMethod}`
-      );
-  }
+  const result = await websiteCollector.collect(source.id, url);
 
   if (result.success) {
     await prisma.source.update({
-      where: {
-        id: source.id,
-      },
-      data: {
-        lastSuccessfulRunAt: new Date(),
-      },
+      where: { id: source.id },
+      data: { lastSuccessfulRunAt: new Date() },
     });
   }
 
   return result;
-}
+};
+
+export const collectFromSource = async (
+  sourceId: number
+): Promise<CollectionResult> => {
+  const source = await prisma.source.findUnique({
+    where: { id: sourceId },
+    select: { id: true, sourceUrl: true },
+  });
+
+  if (!source) {
+    throw new Error(`Source with ID ${sourceId} not found`);
+  }
+
+  return collectUrlFromSource(source.id, source.sourceUrl);
+};

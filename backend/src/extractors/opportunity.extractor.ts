@@ -235,6 +235,11 @@ function extractDeadline(
       "i"
     ),
 
+    new RegExp(
+      String.raw`student\s+application\s+open\s+till\s*:?\s*(${DATE_TOKEN})`,
+      "i"
+    ),
+
     /*
       Example:
       Last date to apply: 31-10-2026
@@ -346,6 +351,11 @@ function extractApplicationStartDate(
 
     new RegExp(
       String.raw`opening\s+date\s*(?:is|are)?\s*:?\s*(${DATE_TOKEN})`,
+      "i"
+    ),
+
+    new RegExp(
+      String.raw`scheme\s+open\s+from\s*:?\s*(${DATE_TOKEN})`,
       "i"
     ),
 
@@ -649,7 +659,7 @@ function extractTitle(
   jsonLd: Record<string, unknown>[]
 ): string | null {
   return (
-    cleanText($("h1").first().text()) ??
+    cleanText($("h1, h2, h3, h4, h5, h6").first().text()) ??
     getJsonLdValue(jsonLd, [
       "name",
       "headline",
@@ -1174,7 +1184,7 @@ export function extractOpportunity(
     applicationDeadline,
 
     officialUrl:
-      input.sourceUrl,
+      input.officialUrl ?? input.sourceUrl,
 
     applicationUrl,
 
@@ -1213,7 +1223,8 @@ export function extractOpportunityFromCollection(
     error?: string;
   },
   sourceUrl: string,
-  sourceName?: string | null
+  sourceName?: string | null,
+  officialUrl?: string | null
 ): ExtractedOpportunity {
   if (!collectionResult.success) {
     throw new Error(
@@ -1232,5 +1243,6 @@ export function extractOpportunityFromCollection(
     html: collectionResult.content,
     sourceUrl,
     sourceName,
+    officialUrl,
   });
 }
