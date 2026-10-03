@@ -14,7 +14,8 @@
     "test:discovery": "ts-node src/test-source-discovery.ts",
     "test:detail-extraction": "ts-node src/test-detail-extraction.ts",
     "test:nsp-discovery": "ts-node src/test-nsp-discovery.ts",
-    "test:crawler": "ts-node src/test-source-crawler.ts"
+    "test:crawler": "ts-node src/test-source-crawler.ts",
+    "test:crawler:demo": "ts-node src/test-crawler-demo.ts"
   },
   "keywords": [],
   "author": "",
